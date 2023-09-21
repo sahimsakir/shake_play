@@ -1,6 +1,6 @@
 // Variables
 const video = document.getElementById("shakingVideo");
-let lastX, lastY, lastZ, threshold = 15;
+let lastX, lastY, lastZ, threshold = 1;
 
 // Function to start playing the video when the device is shaken
 function startVideoOnShake() {
