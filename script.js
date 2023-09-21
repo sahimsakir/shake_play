@@ -1,18 +1,27 @@
 const shakeDiv = document.getElementById('shakeDiv');
 
-function handleShake(event) {
-    if (event.accelerationIncludingGravity) {
-        const { x, y, z } = event.accelerationIncludingGravity;
-        const acceleration = Math.sqrt(x * x + y * y + z * z);
+function handleShake() {
+    shakeDiv.classList.add('shake');
 
-        if (acceleration > 20) {
-            shakeDiv.classList.add('shaking');
-
-            setTimeout(() => {
-                shakeDiv.classList.remove('shaking');
-            }, 500);
-        }
-    }
+    // Remove the 'shake' class after the animation completes
+    setTimeout(() => {
+        shakeDiv.classList.remove('shake');
+    }, 500);
 }
 
-window.addEventListener('devicemotion', handleShake);
+shakeDiv.addEventListener('click', handleShake);
+
+// Add event listener for device shake (mobile)
+if (window.DeviceMotionEvent) {
+    window.addEventListener('devicemotion', (event) => {
+        const acceleration = event.acceleration;
+        // Adjust the threshold value as needed
+        const shakeThreshold = 10;
+
+        if (Math.abs(acceleration.x) > shakeThreshold ||
+            Math.abs(acceleration.y) > shakeThreshold ||
+            Math.abs(acceleration.z) > shakeThreshold) {
+            handleShake();
+        }
+    });
+}
