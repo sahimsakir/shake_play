@@ -18,7 +18,7 @@ function startVideoOnShake() {
 // Function to handle device motion
 function handleDeviceMotion(event) {
     const acceleration = event.accelerationIncludingGravity;
-    const accelerationThreshold = 15; // Adjust the threshold as needed
+    const accelerationThreshold = 5; // Adjust the threshold as needed
 
     // Calculate the total acceleration
     const totalAcceleration = Math.sqrt(
@@ -34,4 +34,4 @@ function handleDeviceMotion(event) {
 }
 
 // Start listening for device motion
-window.addEventListener("devicemotion", handleDeviceMotion, false);
+window.addEventListener("devicemotion", handleDeviceMotion, true);
