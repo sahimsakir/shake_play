@@ -1,37 +1,18 @@
-// Variables
-const video = document.getElementById("shakingVideo");
-let shakeCount = 0;
-const maxShakeCount = 2; // Set the maximum number of shakes allowed
+const shakeDiv = document.getElementById('shakeDiv');
 
-// Function to start playing the video when shaken
-function startVideoOnShake() {
-    if (shakeCount < maxShakeCount) {
-        video.play();
-        shakeCount++;
-        if (shakeCount === maxShakeCount) {
-            // Disable further shake detection after reaching the maximum count
-            window.removeEventListener("devicemotion", handleDeviceMotion);
+function handleShake(event) {
+    if (event.accelerationIncludingGravity) {
+        const { x, y, z } = event.accelerationIncludingGravity;
+        const acceleration = Math.sqrt(x * x + y * y + z * z);
+
+        if (acceleration > 20) {
+            shakeDiv.classList.add('shaking');
+
+            setTimeout(() => {
+                shakeDiv.classList.remove('shaking');
+            }, 500);
         }
     }
 }
 
-// Function to handle device motion
-function handleDeviceMotion(event) {
-    const acceleration = event.accelerationIncludingGravity;
-    const accelerationThreshold = 5; // Adjust the threshold as needed
-
-    // Calculate the total acceleration
-    const totalAcceleration = Math.sqrt(
-        Math.pow(acceleration.x, 2) +
-        Math.pow(acceleration.y, 2) +
-        Math.pow(acceleration.z, 2)
-    );
-
-    if (totalAcceleration > accelerationThreshold) {
-        // Device is shaken, start playing the video
-        startVideoOnShake();
-    }
-}
-
-// Start listening for device motion
-window.addEventListener("devicemotion", handleDeviceMotion, false);
+window.addEventListener('devicemotion', handleShake);
