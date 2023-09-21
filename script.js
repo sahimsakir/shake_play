@@ -6,7 +6,7 @@ function handleShake() {
     // Remove the 'shake' class after the animation completes
     setTimeout(() => {
         shakeDiv.classList.remove('shake');
-    }, 5000);
+    }, 1000);
 }
 
 shakeDiv.addEventListener('click', handleShake);
