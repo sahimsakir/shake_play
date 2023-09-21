@@ -24,5 +24,5 @@ gn.init().then(function () {
         }
     });
 }).catch(function (e) {
-    console.error("Device does not support gyroscope or gyronorm.js initialization failed.");
+    alert("Device does not support gyroscope or gyronorm.js initialization failed.");
 });
