@@ -1,28 +1,25 @@
-// Initialize gyronorm.js
-const gn = new GyroNorm();
+// Variables
+const video = document.getElementById("shakingVideo");
+let lastX, lastY, lastZ, threshold = 15;
 
 // Function to start playing the video when the device is shaken
 function startVideoOnShake() {
-    const video = document.getElementById("shakingVideo");
-
-    // Start video playback
     video.play();
 }
 
-// Listen for device motion events
-gn.init().then(function () {
-    // Set gyroscope event threshold for shake detection
-    gn.setOption("threshold", 10);
+// Event listener for device motion
+window.addEventListener("devicemotion", (event) => {
+    const acceleration = event.accelerationIncludingGravity;
+    const deltaX = Math.abs(lastX - acceleration.x);
+    const deltaY = Math.abs(lastY - acceleration.y);
+    const deltaZ = Math.abs(lastZ - acceleration.z);
 
-    // Subscribe to the gyroscope data
-    gn.start(data => {
-        const isShaking = data.dm === true || data.dmx === true || data.dmy === true || data.dmz === true;
+    if (deltaX > threshold || deltaY > threshold || deltaZ > threshold) {
+        // Device is shaken, start playing the video
+        startVideoOnShake();
+    }
 
-        if (isShaking) {
-            // Device is shaking, start playing the video
-            startVideoOnShake();
-        }
-    });
-}).catch(function (e) {
-    alert("Device does not support gyroscope or gyronorm.js initialization failed.");
+    lastX = acceleration.x;
+    lastY = acceleration.y;
+    lastZ = acceleration.z;
 });
