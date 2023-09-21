@@ -34,4 +34,4 @@ function handleDeviceMotion(event) {
 }
 
 // Start listening for device motion
-window.addEventListener("devicemotion", handleDeviceMotion, true);
+window.addEventListener("devicemotion", handleDeviceMotion, false);
